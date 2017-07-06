@@ -3,13 +3,9 @@
 namespace LinqToDB.Identity
 {
 	/// <summary>
-	///     Represents default <see cref="IConnectionFactory{TContext,TConnection}" />
+	///     Represents default <see cref="IConnectionFactory" />
 	/// </summary>
-	/// <typeparam name="TContext">The type of the data getContext class used to access the store.</typeparam>
-	/// <typeparam name="TConnection">The type repewsenting database getConnection <see cref="DataConnection" /></typeparam>
-	public class DefaultConnectionFactory<TContext, TConnection> : IConnectionFactory<TContext, TConnection>
-		where TContext : class, IDataContext, new()
-		where TConnection : DataConnection, new()
+	public class DefaultConnectionFactory : IConnectionFactory
 	{
 		/// <summary>
 		///     Creates <see cref="DataConnection" /> with default parameters
@@ -17,9 +13,9 @@ namespace LinqToDB.Identity
 		/// <returns>
 		///     <see cref="DataConnection" />
 		/// </returns>
-		public TConnection GetConnection()
+		public DataConnection GetConnection()
 		{
-			return new TConnection();
+			return new DataConnection();
 		}
 
 		/// <summary>
@@ -28,9 +24,9 @@ namespace LinqToDB.Identity
 		/// <returns>
 		///     <see cref="DataContext" />
 		/// </returns>
-		public TContext GetContext()
+		public IDataContext GetContext()
 		{
-			return new TContext();
+			return new DataContext();
 		}
 	}
 }

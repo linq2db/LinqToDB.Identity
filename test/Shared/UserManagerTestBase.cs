@@ -23,7 +23,7 @@ using Xunit;
 
 namespace Microsoft.AspNetCore.Identity.Test
 {
-	public class TestConnectionFactory : IConnectionFactory<DataContext, DataConnection>
+	public class TestConnectionFactory : IConnectionFactory
 	{
 		private static readonly Dictionary<string, HashSet<string>> _tables = new Dictionary<string, HashSet<string>>();
 		private readonly string _configuration;
@@ -41,7 +41,7 @@ namespace Microsoft.AspNetCore.Identity.Test
 			_key = _configuration + "$$" + _connectionString;
 		}
 
-		public DataContext GetContext()
+		public IDataContext GetContext()
 		{
 			return new DataContext(_provider, _connectionString);
 		}
@@ -182,7 +182,7 @@ namespace Microsoft.AspNetCore.Identity.Test
 			if (context == null)
 				context = CreateTestContext();
 
-			services.AddSingleton<IConnectionFactory<DataContext, DataConnection>>(context);
+			services.AddSingleton<IConnectionFactory>(context);
 
 			SetupIdentityServices(services, context);
 			if (configureServices != null)

@@ -26,11 +26,13 @@ namespace Microsoft.AspNetCore.Identity.EntityFrameworkCore.Test
 		{
 			MappingSchema.Default
 				.GetFluentMappingBuilder()
+				
 				.Entity<IdentityUser>()
 				.HasPrimaryKey(_ => _.Id)
 				.Property(_ => _.Id)
 				.HasLength(255)
 				.IsNullable(false)
+
 				.Entity<IdentityRole>()
 				.HasPrimaryKey(_ => _.Id)
 				.Property(_ => _.Id)

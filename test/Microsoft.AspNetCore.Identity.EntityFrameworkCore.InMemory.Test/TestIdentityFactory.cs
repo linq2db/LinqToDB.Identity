@@ -33,10 +33,10 @@ namespace Microsoft.AspNetCore.Identity.EntityFrameworkCore.InMemory.Test
 			return services;
 		}
 
-		public static RoleManager<IdentityRole> CreateRoleManager(IConnectionFactory<DataContext, DataConnection> factory)
+		public static RoleManager<IdentityRole> CreateRoleManager(IConnectionFactory factory)
 		{
 			var services = CreateTestServices();
-			services.AddSingleton<IRoleStore<IdentityRole>>(new RoleStore<DataContext, DataConnection, IdentityRole>(factory));
+			services.AddSingleton<IRoleStore<IdentityRole>>(new RoleStore<IdentityRole>(factory));
 			return services.BuildServiceProvider().GetRequiredService<RoleManager<IdentityRole>>();
 		}
 		//{

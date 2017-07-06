@@ -35,7 +35,7 @@
     <PackageReference Include="Microsoft.Extensions.Configuration.EnvironmentVariables" Version="1.1.2" />
     <PackageReference Include="Microsoft.Extensions.Configuration.FileExtensions" Version="1.1.2" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="1.1.2" />
-    <PackageReference Include="Moq" Version="4.7.10" />
+    <PackageReference Include="Moq" Version="4.7.63" />
     <PackageReference Include="xunit" Version="2.2.0" />
     <PackageReference Include="Microsoft.Data.Sqlite" Version="1.1.1" />
   </ItemGroup>

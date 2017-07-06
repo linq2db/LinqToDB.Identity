@@ -64,12 +64,12 @@ namespace Microsoft.AspNetCore.Identity.EntityFrameworkCore.InMemory.Test
 		protected override void AddUserStore(IServiceCollection services, TestConnectionFactory context = null)
 		{
 			services.AddSingleton<IUserStore<IdentityUser>>(
-				new UserStore<DataContext, DataConnection, IdentityUser>(context ?? CreateTestContext()));
+				new UserStore<IdentityUser>(context ?? CreateTestContext()));
 		}
 
 		protected override void AddRoleStore(IServiceCollection services, TestConnectionFactory context = null)
 		{
-			var store = new RoleStore<DataContext, DataConnection, IdentityRole>(context ?? CreateTestContext());
+			var store = new RoleStore<IdentityRole>(context ?? CreateTestContext());
 			services.AddSingleton<IRoleStore<IdentityRole>>(store);
 		}
 

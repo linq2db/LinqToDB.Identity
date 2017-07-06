@@ -233,19 +233,16 @@ namespace Microsoft.AspNetCore.Identity.EntityFrameworkCore.Test
 
 	public class UserStoreWithGenerics :
 		UserStore<
-			DataContext,
-			DataConnection,
+			string,
 			IdentityUserWithGenerics,
 			MyIdentityRole,
-			string,
 			IdentityUserClaimWithIssuer,
 			IdentityUserRoleWithDate,
 			IdentityUserLoginWithContext,
-			IdentityUserTokenWithStuff,
-			IdentityRoleClaimWithIssuer>
+			IdentityUserTokenWithStuff>
 	{
-		public UserStoreWithGenerics(IConnectionFactory<DataContext, DataConnection> fasctory,
-			string loginContext) : base(fasctory)
+		public UserStoreWithGenerics(IConnectionFactory factory,
+			string loginContext) : base(factory)
 		{
 			LoginContext = loginContext;
 		}
@@ -299,12 +296,11 @@ namespace Microsoft.AspNetCore.Identity.EntityFrameworkCore.Test
 		}
 	}
 
-	public class RoleStoreWithGenerics : RoleStore<DataContext, DataConnection, MyIdentityRole, string,
-		IdentityUserRoleWithDate, IdentityRoleClaimWithIssuer>
+	public class RoleStoreWithGenerics : RoleStore<string, MyIdentityRole, IdentityRoleClaimWithIssuer>
 	{
 		private string _loginContext;
 
-		public RoleStoreWithGenerics(IConnectionFactory<DataContext, DataConnection> factory,
+		public RoleStoreWithGenerics(IConnectionFactory factory,
 			string loginContext) : base(factory)
 		{
 			_loginContext = loginContext;

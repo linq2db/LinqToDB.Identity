@@ -111,13 +111,13 @@ namespace Microsoft.AspNetCore.Identity.EntityFrameworkCore.Test
 		protected override void AddUserStore(IServiceCollection services, TestConnectionFactory context = null)
 		{
 			services.AddSingleton<IUserStore<TUser>>(
-				new UserStore<DataContext, DataConnection, TUser, TRole, TKey>(CreateTestContext()));
+				new UserStore<TKey, TUser, TRole>(CreateTestContext()));
 		}
 
 		protected override void AddRoleStore(IServiceCollection services, TestConnectionFactory context = null)
 		{
 			services.AddSingleton<IRoleStore<TRole>>(
-				new RoleStore<DataContext, DataConnection, TRole, TKey>(CreateTestContext()));
+				new RoleStore<TKey, TRole>(CreateTestContext()));
 		}
 
 		protected override void SetUserPasswordHash(TUser user, string hashedPassword)

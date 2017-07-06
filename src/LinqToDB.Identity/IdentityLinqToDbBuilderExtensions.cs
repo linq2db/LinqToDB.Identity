@@ -13,77 +13,130 @@ using Microsoft.Extensions.DependencyInjection.Extensions;
 namespace Microsoft.Extensions.DependencyInjection
 {
 	/// <summary>
-	///     Contains extension methods to <see cref="IdentityBuilder" /> for adding entity framework stores.
+	///     Contains extension methods to <see cref="IdentityBuilder" /> for adding linq2db stores.
 	/// </summary>
 	public static class IdentityLinqToDbBuilderExtensions
 	{
 		/// <summary>
-		///     Adds an Entity Framework implementation of identity information stores.
+		///     Adds an linq2db plementation of identity information stores.
 		/// </summary>
-		/// <typeparam name="TContext">
-		///     The type of the class for <see cref="IDataContext" />,
-		///     <see cref="IConnectionFactory{TContext,TConnection}" />
-		/// </typeparam>
-		/// <typeparam name="TConnection">
-		///     The type of the class for <see cref="DataConnection" />,
-		///     <see cref="IConnectionFactory{TContext,TConnection}" />
-		/// </typeparam>
 		/// <param name="builder">The <see cref="IdentityBuilder" /> instance this method extends.</param>
 		/// <param name="factory">
-		///     <see cref="IConnectionFactory{TContext,TConnection}" />
+		///     <see cref="IConnectionFactory" />
 		/// </param>
 		/// <returns>The <see cref="IdentityBuilder" /> instance this method extends.</returns>
 		// ReSharper disable once InconsistentNaming
-		public static IdentityBuilder AddLinqToDBStores<TContext, TConnection>(this IdentityBuilder builder,
-			IConnectionFactory<TContext, TConnection> factory)
-			where TContext : IDataContext
-			where TConnection : DataConnection
+		public static IdentityBuilder AddLinqToDBStores(this IdentityBuilder builder, IConnectionFactory factory)
 		{
-			builder.Services.AddSingleton(factory);
-
-			builder.Services.TryAdd(
-				GetDefaultServices(builder.UserType, builder.RoleType, typeof(TContext), typeof(TConnection)));
-			return builder;
+			return AddLinqToDBStores(builder, factory,
+				typeof(string), 
+				typeof(IdentityUserClaim<string>), 
+				typeof(IdentityUserRole<string>), 
+				typeof(IdentityUserLogin<string>), 
+				typeof(IdentityUserToken<string>), 
+				typeof(IdentityRoleClaim<string>));
 		}
 
 		/// <summary>
-		///     Adds an Entity Framework implementation of identity information stores.
+		///     Adds an linq2db implementation of identity information stores.
 		/// </summary>
-		/// <typeparam name="TContext">
-		///     The type of the class for <see cref="IDataContext" />,
-		///     <see cref="IConnectionFactory{TContext,TConnection}" />
-		/// </typeparam>
-		/// <typeparam name="TConnection">
-		///     The type of the class for <see cref="DataConnection" />,
-		///     <see cref="IConnectionFactory{TContext,TConnection}" />
-		/// </typeparam>
 		/// <typeparam name="TKey">The type of the primary key used for the users and roles.</typeparam>
 		/// <param name="builder">The <see cref="IdentityBuilder" /> instance this method extends.</param>
 		/// <param name="factory">
-		///     <see cref="IConnectionFactory{TContext,TConnection}" />
+		///     <see cref="IConnectionFactory" />
 		/// </param>
 		/// <returns>The <see cref="IdentityBuilder" /> instance this method extends.</returns>
 		// ReSharper disable once InconsistentNaming
-		public static IdentityBuilder AddLinqToDBStores<TContext, TConnection, TKey>(this IdentityBuilder builder,
-			IConnectionFactory<TContext, TConnection> factory)
-			where TContext : IDataContext
-			where TConnection : DataConnection
+		public static IdentityBuilder AddLinqToDBStores<TKey>(this IdentityBuilder builder, IConnectionFactory factory)
 			where TKey : IEquatable<TKey>
+		{
+			return AddLinqToDBStores(builder, factory,
+				typeof(TKey),
+				typeof(IdentityUserClaim<TKey>),
+				typeof(IdentityUserRole<TKey>),
+				typeof(IdentityUserLogin<TKey>),
+				typeof(IdentityUserToken<TKey>),
+				typeof(IdentityRoleClaim<TKey>));
+		}
+
+		/// <summary>
+		///     Adds an linq2db implementation of identity information stores.
+		/// </summary>
+		/// <typeparam name="TKey">The type of the primary key used for the users and roles.</typeparam>
+		/// <typeparam name="TUserClaim">The type representing a claim.</typeparam>
+		/// <typeparam name="TUserRole">The type representing a user role.</typeparam>
+		/// <typeparam name="TUserLogin">The type representing a user external login.</typeparam>
+		/// <typeparam name="TUserToken">The type representing a user token.</typeparam>
+		/// <typeparam name="TRoleClaim">The type of the class representing a role claim.</typeparam>
+		/// <param name="builder">The <see cref="IdentityBuilder" /> instance this method extends.</param>
+		/// <param name="factory">
+		///     <see cref="IConnectionFactory" />
+		/// </param>
+		/// <returns>The <see cref="IdentityBuilder" /> instance this method extends.</returns>
+		// ReSharper disable once InconsistentNaming
+		public static IdentityBuilder AddLinqToDBStores<
+			TKey, 
+			TUserClaim, 
+			TUserRole, 
+			TUserLogin, 
+			TUserToken, 
+			TRoleClaim>(this IdentityBuilder builder, IConnectionFactory factory)
+			where TUserClaim : class, IIdentityUserClaim<TKey>
+			where TUserRole : class, IIdentityUserRole<TKey>
+			where TUserLogin : class, IIdentityUserLogin<TKey>
+			where TUserToken : class, IIdentityUserToken<TKey>
+			where TKey : IEquatable<TKey>
+			where TRoleClaim : class, IIdentityRoleClaim<TKey>
+		{
+
+			return AddLinqToDBStores(builder, factory,
+				typeof(TKey), 
+				typeof(TUserClaim), 
+				typeof(TUserRole), 
+				typeof(TUserLogin), 
+				typeof(TUserToken), 
+				typeof(TRoleClaim));
+		}
+
+		/// <summary>
+		///     Adds an linq2db implementation of identity information stores.
+		/// </summary>
+		/// <param name="builder">The <see cref="IdentityBuilder" /> instance this method extends.</param>
+		/// <param name="factory">
+		///     <see cref="IConnectionFactory" />
+		/// </param>
+		/// <param name="keyType">The type of the primary key used for the users and roles.</param>
+		/// <param name="userClaimType">The type representing a claim.</param>
+		/// <param name="userRoleType">The type representing a user role.</param>
+		/// <param name="userLoginType">The type representing a user external login.</param>
+		/// <param name="userTokenType">The type representing a user token.</param>
+		/// <param name="roleClaimType">The type of the class representing a role claim.</param>
+		/// <returns>The <see cref="IdentityBuilder" /> instance this method extends.</returns>
+		// ReSharper disable once InconsistentNaming
+		public static IdentityBuilder AddLinqToDBStores(this IdentityBuilder builder, IConnectionFactory factory,
+			Type keyType, Type userClaimType, Type userRoleType, Type userLoginType, Type userTokenType, Type roleClaimType)
 		{
 			builder.Services.AddSingleton(factory);
 
-			builder.Services.TryAdd(GetDefaultServices(builder.UserType, builder.RoleType, typeof(TContext), typeof(TConnection), typeof(TKey)));
+			builder.Services.TryAdd(GetDefaultServices(
+				keyType, 
+				builder.UserType, 
+				userClaimType, 
+				userRoleType, 
+				userLoginType, 
+				userTokenType, 
+				builder.RoleType, 
+				roleClaimType));
+
 			return builder;
 		}
 
-		private static IServiceCollection GetDefaultServices(Type userType, Type roleType, Type contextType,
-			Type connectionType, Type keyType = null)
+		private static IServiceCollection GetDefaultServices(Type keyType, Type userType, Type userClaimType, Type userRoleType, Type userLoginType, Type userTokenType, Type roleType, Type roleClaimType)
 		{
-			Type userStoreType;
-			Type roleStoreType;
-			keyType = keyType ?? typeof(string);
-			userStoreType = typeof(UserStore<,,,,>).MakeGenericType(contextType, connectionType, userType, roleType, keyType);
-			roleStoreType = typeof(RoleStore<,,,>).MakeGenericType(contextType, connectionType, roleType, keyType);
+			//UserStore<TKey, TUser, TRole, TUserClaim, TUserRole, TUserLogin, TUserToken>
+			var userStoreType = typeof(UserStore<,,,,,,>).MakeGenericType(keyType, userType, roleType, userClaimType, userRoleType, userLoginType, userTokenType);
+			// RoleStore<TKey, TRole, TRoleClaim>
+			var roleStoreType = typeof(RoleStore<,,>).MakeGenericType(keyType, roleType, roleClaimType);
 
 			var services = new ServiceCollection();
 			services.AddScoped(

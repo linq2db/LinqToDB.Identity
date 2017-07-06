@@ -5,15 +5,7 @@ namespace LinqToDB.Identity
 	/// <summary>
 	///     Represents connection factory
 	/// </summary>
-	/// <typeparam name="TContext">
-	///     <see cref="IDataContext" />
-	/// </typeparam>
-	/// <typeparam name="TConnection">
-	///     <see cref="DataConnection" />
-	/// </typeparam>
-	public interface IConnectionFactory<out TContext, out TConnection>
-		where TContext : IDataContext
-		where TConnection : DataConnection
+	public interface IConnectionFactory
 	{
 		/// <summary>
 		///     Gets new instance of <see cref="IDataContext" />
@@ -21,7 +13,7 @@ namespace LinqToDB.Identity
 		/// <returns>
 		///     <see cref="IDataContext" />
 		/// </returns>
-		TContext GetContext();
+		IDataContext GetContext();
 
 		/// <summary>
 		///     Gets new instance of <see cref="DataConnection" />
@@ -29,6 +21,6 @@ namespace LinqToDB.Identity
 		/// <returns>
 		///     <see cref="DataConnection" />
 		/// </returns>
-		TConnection GetConnection();
+		DataConnection GetConnection();
 	}
 }

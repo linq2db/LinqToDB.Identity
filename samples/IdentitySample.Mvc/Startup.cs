@@ -53,7 +53,7 @@ namespace IdentitySample
 					options.Cookies.ApplicationCookie.DataProtectionProvider =
 						DataProtectionProvider.Create(new DirectoryInfo("C:\\Github\\Identity\\artifacts"));
 				})
-				.AddLinqToDBStores(new DefaultConnectionFactory<DataContext, ApplicationDataConnection>())
+				.AddLinqToDBStores(new DefaultConnectionFactory())
 				.AddDefaultTokenProviders();
 
 			services.AddMvc();

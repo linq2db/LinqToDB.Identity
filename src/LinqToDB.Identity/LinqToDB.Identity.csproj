@@ -14,15 +14,16 @@
     <PackageId>linq2db.Identity</PackageId>
     <PackageTags>aspnetcore;linq2db;identity;membership;LinqToDB</PackageTags>
     <PackageIconUrl>http://www.gravatar.com/avatar/fc2e509b6ed116b9aa29a7988fdb8990?s=320</PackageIconUrl>
-    <PackageProjectUrl>https://github.com/ili/LinqToDB.Identity</PackageProjectUrl>
+    <PackageProjectUrl>https://github.com/linq2db/LinqToDB.Identity</PackageProjectUrl>
     <PackageLicenseUrl>https://opensource.org/licenses/MIT</PackageLicenseUrl>
     <RepositoryType>git</RepositoryType>
-    <RepositoryUrl>git://github.com/ili/LinqToDB.Identity</RepositoryUrl>
+    <RepositoryUrl>git://github.com/linq2db/LinqToDB.Identity</RepositoryUrl>
     <NetStandardImplicitPackageVersion>1.6.1</NetStandardImplicitPackageVersion>
     <GenerateNeutralResourcesLanguageAttribute>false</GenerateNeutralResourcesLanguageAttribute>
     <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
     <GenerateAssemblyCopyrightAttribute>false</GenerateAssemblyCopyrightAttribute>
     <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
+    <Version>1.2.0</Version>
   </PropertyGroup>
 
   <ItemGroup>
@@ -31,7 +32,7 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Identity" Version="1.1.2" />
-    <PackageReference Include="linq2db.core" Version="1.8.0" />
+    <PackageReference Include="linq2db.core" Version="1.8.3" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="1.1.1" />
   </ItemGroup>
 
