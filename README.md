@@ -23,7 +23,7 @@ services.AddIdentity<ApplicationUser, IdentityRole>(options => {
     options.Cookies.ApplicationCookie.CookieName = "Interop";
     options.Cookies.ApplicationCookie.DataProtectionProvider = DataProtectionProvider.Create(new DirectoryInfo("C:\\Github\\Identity\\artifacts"));
 })
-    .AddLinqToDBStores(new DefaultConnectionFactory<DataContext, ApplicationDataConnection>()) //here
+    .AddLinqToDBStores(new DefaultConnectionFactory()) //here
     .AddDefaultTokenProviders();
 ```
 

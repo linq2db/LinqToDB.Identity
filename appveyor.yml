@@ -1,3 +1,5 @@
+
+
 init:
   - git config --global core.autocrlf true
   - ps: $env:TestSqlServerDefaultConnectionString = "Server=(local)\SQL2012SP1;Database=master;Integrated Security=true"
@@ -7,7 +9,7 @@ cache:
 - '%USERPROFILE%\.nuget\packages -> **\project.json'
 
 environment:
-  nugetVersion: 1.1.1
+  nugetVersion: 1.2.0
 
 version: $(nugetVersion).{build}
 
@@ -28,7 +30,6 @@ build:
   project: LinqToDB.Identity.sln
   verbosity: minimal
 
-
 deploy:
 - provider: NuGet
   server: https://www.myget.org/F/linq2db/api/v2
@@ -44,3 +45,6 @@ deploy:
   skip_symbols: false
   on:
     branch: release
+    
+skip_commits:
+  message: /ci skip/      # Regex for matching commit message    
