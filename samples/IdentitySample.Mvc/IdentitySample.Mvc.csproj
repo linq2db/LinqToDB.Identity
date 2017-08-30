@@ -17,10 +17,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Include="Models\AccountViewModels\ExternalLoginConfirmationViewModel.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\..\src\LinqToDB.Identity\LinqToDB.Identity.csproj" />
   </ItemGroup>
 
