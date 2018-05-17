@@ -5,6 +5,12 @@ using Xunit;
 
 namespace Microsoft.AspNetCore.Identity.EntityFrameworkCore.Test
 {
+	using IdentityUser = LinqToDB.Identity.IdentityUser;
+	using IdentityRole = LinqToDB.Identity.IdentityRole;
+
+	using IdentityUserL = LinqToDB.Identity.IdentityUser<long>;
+	using IdentityRoleL = LinqToDB.Identity.IdentityRole<long>;
+
 	public class ProvideConfigutayionTest
 	{
 		[Fact]
@@ -26,13 +32,13 @@ namespace Microsoft.AspNetCore.Identity.EntityFrameworkCore.Test
 		{
 			var services = new ServiceCollection();
 			services
-				.AddIdentity<IdentityUser<long>, IdentityRole<long>>()
+				.AddIdentity<IdentityUserL, IdentityRoleL>()
 				.AddLinqToDBStores<long>(new DefaultConnectionFactory());
 
 			var sp = services.BuildServiceProvider();
 
-			Assert.NotNull(sp.GetService<IUserStore<IdentityUser<long>>>());
-			Assert.NotNull(sp.GetService<IRoleStore<IdentityRole<long>>>());
+			Assert.NotNull(sp.GetService<IUserStore<IdentityUserL>>());
+			Assert.NotNull(sp.GetService<IRoleStore<IdentityRoleL>>());
 		}
 
 		[Fact]
@@ -40,19 +46,19 @@ namespace Microsoft.AspNetCore.Identity.EntityFrameworkCore.Test
 		{
 			var services = new ServiceCollection();
 			services
-				.AddIdentity<IdentityUser<decimal>, IdentityRole<decimal>>()
+				.AddIdentity<LinqToDB.Identity.IdentityUser<decimal>, LinqToDB.Identity.IdentityRole<decimal>>()
 				.AddLinqToDBStores<
 					decimal, 
-					IdentityUserClaim<decimal>, 
-					IdentityUserRole<decimal>, 
-					IdentityUserLogin<decimal>, 
-					IdentityUserToken<decimal>, 
-					IdentityRoleClaim<decimal>>(new DefaultConnectionFactory());
+					LinqToDB.Identity.IdentityUserClaim<decimal>, 
+					LinqToDB.Identity.IdentityUserRole<decimal>, 
+					LinqToDB.Identity.IdentityUserLogin<decimal>, 
+					LinqToDB.Identity.IdentityUserToken<decimal>,
+					LinqToDB.Identity.IdentityRoleClaim<decimal>>(new DefaultConnectionFactory());
 
 			var sp = services.BuildServiceProvider();
 
-			Assert.NotNull(sp.GetService<IUserStore<IdentityUser<decimal>>>());
-			Assert.NotNull(sp.GetService<IRoleStore<IdentityRole<decimal>>>());
+			Assert.NotNull(sp.GetService<IUserStore<LinqToDB.Identity.IdentityUser<decimal>>>());
+			Assert.NotNull(sp.GetService<IRoleStore<LinqToDB.Identity.IdentityRole<decimal>>>());
 		}
 
 	}

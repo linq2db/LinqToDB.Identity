@@ -1,19 +1,25 @@
-
+image: Visual Studio 2017
+configuration: Release
+skip_tags: true
 
 init:
   - git config --global core.autocrlf true
-  - ps: $env:TestSqlServerDefaultConnectionString = "Server=(local)\SQL2012SP1;Database=master;Integrated Security=true"
-
-cache:
-- packages -> **\packages.config
-- '%USERPROFILE%\.nuget\packages -> **\project.json'
+  - ps: $env:TestSqlServerDefaultConnectionString = "Server=(local)\SQL2014;Database=master;Integrated Security=true"
 
 environment:
-  nugetVersion: 1.2.1
+  assemblyVersion: 2.0.0
+  packageVersion: 2.0.0-final1
 
-version: $(nugetVersion).{build}
+version: $(assemblyVersion).{build}
 
 build_script:
+- ps: |
+    if ($env:APPVEYOR_REPO_BRANCH -ne "release") 
+    {
+        $env:packageVersion = "$env:assemblyVersion-rc$env:appveyor_build_number"
+    }
+
+    .\build\CodeJam.AppVeyor.FixVersionProps.ps1 -path src\LinqToDB.Identity\LinqToDB.Identity.csproj -buildVersion $env:assemblyVersion -nugetVersion $env:packageVersion
 - ps: .\build.ps1
 
 test: off
@@ -22,13 +28,9 @@ artifacts:
 - path: artifacts/packages/*.nupkg
 
 services:
-- mssql2012sp1
+- mssql2014
 #- mysql
 #- postgresql
-
-build:
-  project: LinqToDB.Identity.sln
-  verbosity: minimal
 
 deploy:
 - provider: NuGet

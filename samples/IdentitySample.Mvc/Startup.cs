@@ -9,6 +9,7 @@ using LinqToDB.Identity;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -25,8 +26,8 @@ namespace IdentitySample
 				.AddJsonFile("appsettings.json")
 				.AddJsonFile($"appsettings.{env.EnvironmentName}.json", true);
 
-			if (env.IsDevelopment())
-				builder.AddUserSecrets();
+			//if (env.IsDevelopment())
+			//	builder.AddUserSecrets();
 
 			builder.AddEnvironmentVariables();
 			Configuration = builder.Build();
@@ -46,15 +47,18 @@ namespace IdentitySample
 
 			DataConnection.DefaultConfiguration = "Default";
 
-			services.AddIdentity<ApplicationUser, IdentityRole>(options =>
-				{
-					options.Cookies.ApplicationCookie.AuthenticationScheme = "ApplicationCookie";
-					options.Cookies.ApplicationCookie.CookieName = "Interop";
-					options.Cookies.ApplicationCookie.DataProtectionProvider =
-						DataProtectionProvider.Create(new DirectoryInfo("C:\\Github\\Identity\\artifacts"));
-				})
+			services.AddIdentity<ApplicationUser, LinqToDB.Identity.IdentityRole>()
 				.AddLinqToDBStores(new DefaultConnectionFactory())
 				.AddDefaultTokenProviders();
+
+			services.AddAuthentication()
+				.AddCookie(options =>
+				{
+					options.Cookie.Name = "Interop";
+					options.DataProtectionProvider =
+						DataProtectionProvider.Create(new DirectoryInfo("C:\\Github\\Identity\\artifacts"));
+
+				});
 
 			services.AddMvc();
 
@@ -98,17 +102,17 @@ namespace IdentitySample
 			using (var db = new ApplicationDataConnection())
 			{
 				TryCreateTable<ApplicationUser>(db);
-				TryCreateTable<IdentityRole>(db);
-				TryCreateTable<IdentityUserClaim<string>>(db);
-				TryCreateTable<IdentityRoleClaim<string>>(db);
-				TryCreateTable<IdentityUserLogin<string>>(db);
-				TryCreateTable<IdentityUserRole<string>>(db);
-				TryCreateTable<IdentityUserToken<string>>(db);
+				TryCreateTable<LinqToDB.Identity.IdentityRole>(db);
+				TryCreateTable<LinqToDB.Identity.IdentityUserClaim<string>>(db);
+				TryCreateTable<LinqToDB.Identity.IdentityRoleClaim<string>>(db);
+				TryCreateTable<LinqToDB.Identity.IdentityUserLogin<string>>(db);
+				TryCreateTable<LinqToDB.Identity.IdentityUserRole<string>>(db);
+				TryCreateTable<LinqToDB.Identity.IdentityUserToken<string>>(db);
 			}
 
 			app.UseStaticFiles();
 
-			app.UseIdentity();
+			app.UseAuthentication();
 			// To configure external authentication please see http://go.microsoft.com/fwlink/?LinkID=532715
 
 			app.UseMvc(routes =>

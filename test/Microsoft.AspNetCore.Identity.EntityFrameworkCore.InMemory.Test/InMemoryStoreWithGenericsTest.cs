@@ -211,7 +211,7 @@ namespace Microsoft.AspNetCore.Identity.EntityFrameworkCore.InMemory.Test
 
 	#region Generic Type defintions
 
-	public class IdentityUserWithGenerics : IdentityUser<string, IdentityUserClaimWithIssuer, IdentityUserRoleWithDate,
+	public class IdentityUserWithGenerics : LinqToDB.Identity.IdentityUser<string, IdentityUserClaimWithIssuer, IdentityUserRoleWithDate,
 		IdentityUserLoginWithContext>
 	{
 		public IdentityUserWithGenerics()
@@ -283,7 +283,7 @@ namespace Microsoft.AspNetCore.Identity.EntityFrameworkCore.InMemory.Test
 		}
 	}
 
-	public class RoleStoreWithGenerics : RoleStore<string, MyIdentityRole, IdentityRoleClaim<string>>
+	public class RoleStoreWithGenerics : RoleStore<string, MyIdentityRole, LinqToDB.Identity.IdentityRoleClaim<string>>
 	{
 		private string _loginContext;
 
@@ -294,13 +294,13 @@ namespace Microsoft.AspNetCore.Identity.EntityFrameworkCore.InMemory.Test
 			factory.CreateTable<IdentityUserRoleWithDate>();
 		}
 
-		protected override IdentityRoleClaim<string> CreateRoleClaim(MyIdentityRole role, Claim claim)
+		protected override LinqToDB.Identity.IdentityRoleClaim<string> CreateRoleClaim(MyIdentityRole role, Claim claim)
 		{
-			return new IdentityRoleClaim<string> {RoleId = role.Id, ClaimType = claim.Type, ClaimValue = claim.Value};
+			return new LinqToDB.Identity.IdentityRoleClaim<string> {RoleId = role.Id, ClaimType = claim.Type, ClaimValue = claim.Value};
 		}
 	}
 
-	public class IdentityUserClaimWithIssuer : IdentityUserClaim<string>
+	public class IdentityUserClaimWithIssuer : LinqToDB.Identity.IdentityUserClaim<string>
 	{
 		public string Issuer { get; set; }
 
@@ -317,12 +317,12 @@ namespace Microsoft.AspNetCore.Identity.EntityFrameworkCore.InMemory.Test
 		}
 	}
 
-	public class IdentityUserRoleWithDate : IdentityUserRole<string>
+	public class IdentityUserRoleWithDate : LinqToDB.Identity.IdentityUserRole<string>
 	{
 		public DateTime Created { get; set; }
 	}
 
-	public class MyIdentityRole : IdentityRole<string, IdentityUserRoleWithDate, IdentityRoleClaim<string>>
+	public class MyIdentityRole : LinqToDB.Identity.IdentityRole<string, IdentityUserRoleWithDate, LinqToDB.Identity.IdentityRoleClaim<string>>
 	{
 		public MyIdentityRole()
 		{
@@ -335,12 +335,12 @@ namespace Microsoft.AspNetCore.Identity.EntityFrameworkCore.InMemory.Test
 		}
 	}
 
-	public class IdentityUserTokenWithStuff : IdentityUserToken<string>
+	public class IdentityUserTokenWithStuff : LinqToDB.Identity.IdentityUserToken<string>
 	{
 		public string Stuff { get; set; }
 	}
 
-	public class IdentityUserLoginWithContext : IdentityUserLogin<string>
+	public class IdentityUserLoginWithContext : LinqToDB.Identity.IdentityUserLogin<string>
 	{
 		public string Context { get; set; }
 	}

@@ -8,7 +8,7 @@ using LinqToDB.Mapping;
 
 namespace Microsoft.AspNetCore.Identity.EntityFrameworkCore.Test
 {
-	public class StringUser : IdentityUser
+	public class StringUser : LinqToDB.Identity.IdentityUser
 	{
 		public StringUser()
 		{
@@ -20,7 +20,7 @@ namespace Microsoft.AspNetCore.Identity.EntityFrameworkCore.Test
 		public override string Id { get; set; }
 	}
 
-	public class StringRole : IdentityRole<string>
+	public class StringRole : LinqToDB.Identity.IdentityRole<string>
 	{
 		public StringRole()
 		{

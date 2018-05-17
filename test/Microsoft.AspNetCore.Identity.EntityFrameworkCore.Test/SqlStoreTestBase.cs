@@ -21,8 +21,8 @@ namespace Microsoft.AspNetCore.Identity.EntityFrameworkCore.Test
 {
 	public abstract class SqlStoreTestBase<TUser, TRole, TKey> : UserManagerTestBase<TUser, TRole, TKey>,
 		IClassFixture<ScratchDatabaseFixture>
-		where TUser : IdentityUser<TKey>, new()
-		where TRole : IdentityRole<TKey>, new()
+		where TUser : LinqToDB.Identity.IdentityUser<TKey>, new()
+		where TRole : LinqToDB.Identity.IdentityRole<TKey>, new()
 		where TKey : IEquatable<TKey>
 	{
 		private readonly ScratchDatabaseFixture _fixture;
@@ -221,14 +221,14 @@ namespace Microsoft.AspNetCore.Identity.EntityFrameworkCore.Test
 			IdentityResultAssert.IsSuccess(await userMgr.CreateAsync(user));
 			IdentityResultAssert.IsSuccess(await userMgr.AddToRoleAsync(user, roleName));
 			var roles = await userMgr.GetRolesAsync(user);
-			Assert.Equal(1, roles.Count());
+			Assert.Single(roles);
 			IdentityResultAssert.IsSuccess(await roleMgr.DeleteAsync(role));
 			Assert.Null(await roleMgr.FindByNameAsync(roleName));
 			Assert.False(await roleMgr.RoleExistsAsync(roleName));
 			// REVIEW: We should throw if deleteing a non empty role?
 			roles = await userMgr.GetRolesAsync(user);
 
-			Assert.Equal(0, roles.Count());
+			Assert.Empty(roles);
 		}
 
 		[ConditionalFact]
@@ -249,13 +249,13 @@ namespace Microsoft.AspNetCore.Identity.EntityFrameworkCore.Test
 			IdentityResultAssert.IsSuccess(await userMgr.AddToRoleAsync(user, roleName));
 
 			var roles = await userMgr.GetRolesAsync(user);
-			Assert.Equal(1, roles.Count());
+			Assert.Single(roles);
 
 			IdentityResultAssert.IsSuccess(await userMgr.DeleteAsync(user));
 			IdentityResultAssert.IsSuccess(await roleMgr.DeleteAsync(role));
 
 			roles = await userMgr.GetRolesAsync(user);
-			Assert.Equal(0, roles.Count());
+			Assert.Empty(roles);
 		}
 
 

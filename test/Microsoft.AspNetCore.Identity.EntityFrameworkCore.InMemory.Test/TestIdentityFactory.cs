@@ -9,6 +9,9 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace Microsoft.AspNetCore.Identity.EntityFrameworkCore.InMemory.Test
 {
+	using IdentityRole = LinqToDB.Identity.IdentityRole;
+	using IdentityUser = LinqToDB.Identity.IdentityUser;
+
 	public static class TestIdentityFactory
 	{
 		//     public static InMemoryContext CreateContext()

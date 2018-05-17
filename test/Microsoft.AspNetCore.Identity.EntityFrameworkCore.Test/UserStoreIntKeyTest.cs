@@ -6,7 +6,7 @@ using LinqToDB.Identity;
 
 namespace Microsoft.AspNetCore.Identity.EntityFrameworkCore.Test
 {
-	public class IntUser : IdentityUser<int>
+	public class IntUser : LinqToDB.Identity.IdentityUser<int>
 	{
 		private static volatile int _id;
 
@@ -17,7 +17,7 @@ namespace Microsoft.AspNetCore.Identity.EntityFrameworkCore.Test
 		}
 	}
 
-	public class IntRole : IdentityRole<int>
+	public class IntRole : LinqToDB.Identity.IdentityRole<int>
 	{
 		private static volatile int _id;
 

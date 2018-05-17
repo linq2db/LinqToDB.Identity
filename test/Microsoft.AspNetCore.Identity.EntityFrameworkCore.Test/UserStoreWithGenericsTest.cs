@@ -222,7 +222,7 @@ namespace Microsoft.AspNetCore.Identity.EntityFrameworkCore.Test
 
 	#region Generic Type defintions
 
-	public class IdentityUserWithGenerics : IdentityUser<string, IdentityUserClaimWithIssuer, IdentityUserRoleWithDate,
+	public class IdentityUserWithGenerics : LinqToDB.Identity.IdentityUser<string, IdentityUserClaimWithIssuer, IdentityUserRoleWithDate,
 		IdentityUserLoginWithContext>
 	{
 		public IdentityUserWithGenerics()
@@ -318,7 +318,7 @@ namespace Microsoft.AspNetCore.Identity.EntityFrameworkCore.Test
 		}
 	}
 
-	public class IdentityUserClaimWithIssuer : IdentityUserClaim<string>
+	public class IdentityUserClaimWithIssuer : LinqToDB.Identity.IdentityUserClaim<string>
 	{
 		public string Issuer { get; set; }
 
@@ -335,7 +335,7 @@ namespace Microsoft.AspNetCore.Identity.EntityFrameworkCore.Test
 		}
 	}
 
-	public class IdentityRoleClaimWithIssuer : IdentityRoleClaim<string>
+	public class IdentityRoleClaimWithIssuer : LinqToDB.Identity.IdentityRoleClaim<string>
 	{
 		public string Issuer { get; set; }
 
@@ -352,12 +352,12 @@ namespace Microsoft.AspNetCore.Identity.EntityFrameworkCore.Test
 		}
 	}
 
-	public class IdentityUserRoleWithDate : IdentityUserRole<string>
+	public class IdentityUserRoleWithDate : LinqToDB.Identity.IdentityUserRole<string>
 	{
 		public DateTime Created { get; set; }
 	}
 
-	public class MyIdentityRole : IdentityRole<string, IdentityUserRoleWithDate, IdentityRoleClaimWithIssuer>
+	public class MyIdentityRole : LinqToDB.Identity.IdentityRole<string, IdentityUserRoleWithDate, IdentityRoleClaimWithIssuer>
 	{
 		public MyIdentityRole()
 		{
@@ -370,12 +370,12 @@ namespace Microsoft.AspNetCore.Identity.EntityFrameworkCore.Test
 		}
 	}
 
-	public class IdentityUserTokenWithStuff : IdentityUserToken<string>
+	public class IdentityUserTokenWithStuff : LinqToDB.Identity.IdentityUserToken<string>
 	{
 		public string Stuff { get; set; }
 	}
 
-	public class IdentityUserLoginWithContext : IdentityUserLogin<string>
+	public class IdentityUserLoginWithContext : LinqToDB.Identity.IdentityUserLogin<string>
 	{
 		public string Context { get; set; }
 	}

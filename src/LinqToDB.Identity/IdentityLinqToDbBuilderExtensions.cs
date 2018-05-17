@@ -30,11 +30,11 @@ namespace Microsoft.Extensions.DependencyInjection
 		{
 			return AddLinqToDBStores(builder, factory,
 				typeof(string), 
-				typeof(IdentityUserClaim<string>), 
-				typeof(IdentityUserRole<string>), 
-				typeof(IdentityUserLogin<string>), 
-				typeof(IdentityUserToken<string>), 
-				typeof(IdentityRoleClaim<string>));
+				typeof(LinqToDB.Identity.IdentityUserClaim<string>), 
+				typeof(LinqToDB.Identity.IdentityUserRole<string>), 
+				typeof(LinqToDB.Identity.IdentityUserLogin<string>), 
+				typeof(LinqToDB.Identity.IdentityUserToken<string>), 
+				typeof(LinqToDB.Identity.IdentityRoleClaim<string>));
 		}
 
 		/// <summary>
@@ -52,11 +52,11 @@ namespace Microsoft.Extensions.DependencyInjection
 		{
 			return AddLinqToDBStores(builder, factory,
 				typeof(TKey),
-				typeof(IdentityUserClaim<TKey>),
-				typeof(IdentityUserRole<TKey>),
-				typeof(IdentityUserLogin<TKey>),
-				typeof(IdentityUserToken<TKey>),
-				typeof(IdentityRoleClaim<TKey>));
+				typeof(LinqToDB.Identity.IdentityUserClaim<TKey>),
+				typeof(LinqToDB.Identity.IdentityUserRole<TKey>),
+				typeof(LinqToDB.Identity.IdentityUserLogin<TKey>),
+				typeof(LinqToDB.Identity.IdentityUserToken<TKey>),
+				typeof(LinqToDB.Identity.IdentityRoleClaim<TKey>));
 		}
 
 		/// <summary>

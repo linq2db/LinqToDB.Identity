@@ -36,8 +36,13 @@ namespace LinqToDB.Identity
 	///     Represents an authentication token for a user.
 	/// </summary>
 	/// <typeparam name="TKey">The type of the primary key used for users.</typeparam>
-	public class IdentityUserToken<TKey> : IIdentityUserToken<TKey> where TKey : IEquatable<TKey>
+	public class IdentityUserToken<TKey> :
+#if NETSTANDARD2_0
+	Microsoft.AspNetCore.Identity.IdentityUserToken<TKey>,
+#endif
+		IIdentityUserToken<TKey> where TKey : IEquatable<TKey>
 	{
+#if !NETSTANDARD2_0
 		/// <summary>
 		///     Gets or sets the primary key of the user that the token belongs to.
 		/// </summary>
@@ -57,5 +62,6 @@ namespace LinqToDB.Identity
 		///     Gets or sets the token value.
 		/// </summary>
 		public virtual string Value { get; set; }
+#endif
 	}
 }

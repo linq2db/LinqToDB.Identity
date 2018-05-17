@@ -511,7 +511,7 @@ namespace Microsoft.AspNetCore.Identity.Test
 			Assert.False(await manager.CheckPasswordAsync(user, "whatever"));
 			var logins = await manager.GetLoginsAsync(user);
 			Assert.NotNull(logins);
-			Assert.Equal(0, logins.Count());
+			Assert.Empty(logins);
 		}
 
 		[Fact]
@@ -528,7 +528,7 @@ namespace Microsoft.AspNetCore.Identity.Test
 			IdentityResultAssert.IsSuccess(await manager.AddLoginAsync(user, new UserLoginInfo(provider, providerKey, display)));
 			var logins = await manager.GetLoginsAsync(user);
 			Assert.NotNull(logins);
-			Assert.Equal(1, logins.Count());
+			Assert.NotNull(logins.Single());
 			Assert.Equal(provider, logins.First().LoginProvider);
 			Assert.Equal(providerKey, logins.First().ProviderKey);
 			Assert.Equal(display, logins.First().ProviderDisplayName);
@@ -550,7 +550,7 @@ namespace Microsoft.AspNetCore.Identity.Test
 			Assert.True(await manager.HasPasswordAsync(user));
 			var logins = await manager.GetLoginsAsync(user);
 			Assert.NotNull(logins);
-			Assert.Equal(1, logins.Count());
+			Assert.NotNull(logins.Single());
 			Assert.Equal(user.Id, (await manager.FindByLoginAsync(login.LoginProvider, login.ProviderKey)).Id);
 			Assert.True(await manager.CheckPasswordAsync(user, "password"));
 		}
@@ -586,7 +586,7 @@ namespace Microsoft.AspNetCore.Identity.Test
 			Assert.Equal(user.Id, (await manager.FindByLoginAsync(login.LoginProvider, login.ProviderKey)).Id);
 			var logins = await manager.GetLoginsAsync(user);
 			Assert.NotNull(logins);
-			Assert.Equal(1, logins.Count());
+			Assert.NotNull(logins.Single());
 			Assert.Equal(login.LoginProvider, logins.Last().LoginProvider);
 			Assert.Equal(login.ProviderKey, logins.Last().ProviderKey);
 			Assert.Equal(login.ProviderDisplayName, logins.Last().ProviderDisplayName);
@@ -595,7 +595,7 @@ namespace Microsoft.AspNetCore.Identity.Test
 			Assert.Null(await manager.FindByLoginAsync(login.LoginProvider, login.ProviderKey));
 			logins = await manager.GetLoginsAsync(user);
 			Assert.NotNull(logins);
-			Assert.Equal(0, logins.Count());
+			Assert.Empty(logins);
 			Assert.NotEqual(stamp, await manager.GetSecurityStampAsync(user));
 		}
 
@@ -1508,7 +1508,7 @@ namespace Microsoft.AspNetCore.Identity.Test
 				foreach (var r in roles)
 				{
 					var expectedRoleName = await roleManager.GetRoleNameAsync(r);
-					Assert.True(rs.Any(role => role == expectedRoleName));
+					Assert.NotEmpty(rs.Where(role => role == expectedRoleName));
 				}
 			}
 		}
@@ -1652,9 +1652,9 @@ namespace Microsoft.AspNetCore.Identity.Test
 			var user = CreateTestUser(phoneNumber: "123-456-7890");
 			IdentityResultAssert.IsSuccess(await manager.CreateAsync(user));
 			var stamp = await manager.GetSecurityStampAsync(user);
-			Assert.Equal(await manager.GetPhoneNumberAsync(user), "123-456-7890");
+			Assert.Equal("123-456-7890", await manager.GetPhoneNumberAsync(user));
 			IdentityResultAssert.IsSuccess(await manager.SetPhoneNumberAsync(user, "111-111-1111"));
-			Assert.Equal(await manager.GetPhoneNumberAsync(user), "111-111-1111");
+			Assert.Equal("111-111-1111", await manager.GetPhoneNumberAsync(user));
 			Assert.NotEqual(stamp, await manager.GetSecurityStampAsync(user));
 		}
 
@@ -1671,7 +1671,7 @@ namespace Microsoft.AspNetCore.Identity.Test
 			var token1 = await manager.GenerateChangePhoneNumberTokenAsync(user, "111-111-1111");
 			IdentityResultAssert.IsSuccess(await manager.ChangePhoneNumberAsync(user, "111-111-1111", token1));
 			Assert.True(await manager.IsPhoneNumberConfirmedAsync(user));
-			Assert.Equal(await manager.GetPhoneNumberAsync(user), "111-111-1111");
+			Assert.Equal("111-111-1111", await manager.GetPhoneNumberAsync(user));
 			Assert.NotEqual(stamp, await manager.GetSecurityStampAsync(user));
 		}
 
@@ -1687,10 +1687,12 @@ namespace Microsoft.AspNetCore.Identity.Test
 			var stamp = await manager.GetSecurityStampAsync(user);
 			IdentityResultAssert.IsFailure(await manager.ChangePhoneNumberAsync(user, "111-111-1111", "bogus"),
 				"Invalid token.");
+#if !NETSTANDARD2_0 // has other messages
 			IdentityResultAssert.VerifyLogMessage(manager.Logger,
 				$"VerifyChangePhoneNumberTokenAsync() failed for user {await manager.GetUserIdAsync(user)}.");
+#endif
 			Assert.False(await manager.IsPhoneNumberConfirmedAsync(user));
-			Assert.Equal(await manager.GetPhoneNumberAsync(user), "123-456-7890");
+			Assert.Equal("123-456-7890", await manager.GetPhoneNumberAsync(user));
 			Assert.Equal(stamp, await manager.GetSecurityStampAsync(user));
 		}
 
@@ -1708,7 +1710,7 @@ namespace Microsoft.AspNetCore.Identity.Test
 			IdentityResultAssert.IsFailure(await manager.ChangePhoneNumberAsync(user, "bogus", token1),
 				"Invalid token.");
 			Assert.False(await manager.IsPhoneNumberConfirmedAsync(user));
-			Assert.Equal(await manager.GetPhoneNumberAsync(user), "123-456-7890");
+			Assert.Equal("123-456-7890", await manager.GetPhoneNumberAsync(user));
 			Assert.Equal(stamp, await manager.GetSecurityStampAsync(user));
 		}
 
@@ -1731,8 +1733,10 @@ namespace Microsoft.AspNetCore.Identity.Test
 			Assert.True(await manager.VerifyChangePhoneNumberTokenAsync(user, token2, num2));
 			Assert.False(await manager.VerifyChangePhoneNumberTokenAsync(user, token2, num1));
 			Assert.False(await manager.VerifyChangePhoneNumberTokenAsync(user, token1, num2));
+#if !NETSTANDARD2_0 // has other messages
 			IdentityResultAssert.VerifyLogMessage(manager.Logger,
 				$"VerifyChangePhoneNumberTokenAsync() failed for user {await manager.GetUserIdAsync(user)}.");
+#endif
 		}
 
 		[Fact]
@@ -1931,7 +1935,7 @@ namespace Microsoft.AspNetCore.Identity.Test
 			await manager.UpdateAsync(user);
 			factors = await manager.GetValidTwoFactorProvidersAsync(user);
 			Assert.NotNull(factors);
-			Assert.Equal(1, factors.Count());
+			Assert.Single(factors);
 			Assert.Equal("Phone", factors[0]);
 			IdentityResultAssert.IsSuccess(await manager.SetEmailAsync(user, "test@test.com"));
 			token = await manager.GenerateEmailConfirmationTokenAsync(user);
@@ -1942,7 +1946,7 @@ namespace Microsoft.AspNetCore.Identity.Test
 			IdentityResultAssert.IsSuccess(await manager.SetEmailAsync(user, null));
 			factors = await manager.GetValidTwoFactorProvidersAsync(user);
 			Assert.NotNull(factors);
-			Assert.Equal(1, factors.Count());
+			Assert.Single(factors);
 			Assert.Equal("Phone", factors[0]);
 		}
 

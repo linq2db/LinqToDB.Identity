@@ -11,8 +11,10 @@ using Microsoft.AspNetCore.Identity.Test;
 using Microsoft.Extensions.DependencyInjection;
 using Xunit;
 
+
 namespace Microsoft.AspNetCore.Identity.EntityFrameworkCore.InMemory.Test
 {
+    using IdentityRole=LinqToDB.Identity.IdentityRole;
 	public class RoleStoreTest : IClassFixture<InMemoryStorage>
 	{
 		public RoleStoreTest(InMemoryStorage storage)
@@ -27,7 +29,7 @@ namespace Microsoft.AspNetCore.Identity.EntityFrameworkCore.InMemory.Test
 			var connectionString = _storage.ConnectionString;
 
 			var factory = new TestConnectionFactory(new SQLiteDataProvider(), "RoleStoreTest", connectionString);
-			factory.CreateTables<IdentityUser, IdentityRole, string>();
+			factory.CreateTables<LinqToDB.Identity.IdentityUser, LinqToDB.Identity.IdentityRole, string>();
 			return factory;
 		}
 
@@ -37,10 +39,10 @@ namespace Microsoft.AspNetCore.Identity.EntityFrameworkCore.InMemory.Test
 			var services = TestIdentityFactory.CreateTestServices();
 			//services.AddEntityFrameworkInMemoryDatabase();
 			services.AddSingleton(GetConnectionFactory());
-			services.AddTransient<IRoleStore<IdentityRole>, RoleStore<IdentityRole>>();
-			services.AddSingleton<RoleManager<IdentityRole>>();
+			services.AddTransient<IRoleStore<LinqToDB.Identity.IdentityRole>, RoleStore<LinqToDB.Identity.IdentityRole>>();
+			services.AddSingleton<RoleManager<LinqToDB.Identity.IdentityRole>>();
 			var provider = services.BuildServiceProvider();
-			var manager = provider.GetRequiredService<RoleManager<IdentityRole>>();
+			var manager = provider.GetRequiredService<RoleManager<LinqToDB.Identity.IdentityRole>>();
 			Assert.NotNull(manager);
 			IdentityResultAssert.IsSuccess(await manager.CreateAsync(new IdentityRole("someRole")));
 		}

@@ -1,56 +1,49 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFrameworks>netcoreapp1.0</TargetFrameworks>
-    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-    <AssemblyName>Microsoft.AspNetCore.Identity.EntityFrameworkCore.Test</AssemblyName>
-    <AssemblyOriginatorKeyFile>$(SolutionDir)Tests.snk</AssemblyOriginatorKeyFile>
-    <SignAssembly>true</SignAssembly>
-    <PublicSign Condition=" '$(OS)' != 'Windows_NT' ">true</PublicSign>
-    <PackageId>Microsoft.AspNetCore.Identity.EntityFrameworkCore.Test</PackageId>
-    <GenerateRuntimeConfigurationFiles>true</GenerateRuntimeConfigurationFiles>
-    <RuntimeFrameworkVersion Condition=" '$(TargetFramework)' == 'netcoreapp1.0' ">1.0.4</RuntimeFrameworkVersion>
-  </PropertyGroup>
+	<PropertyGroup>
+		<TargetFrameworks>netcoreapp2.0</TargetFrameworks>
+		<TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+		
+		<AssemblyName>Microsoft.AspNetCore.Identity.EntityFrameworkCore.Test</AssemblyName>
+		<AssemblyOriginatorKeyFile>$(SolutionDir)Tests.snk</AssemblyOriginatorKeyFile>
+		<SignAssembly>true</SignAssembly>
+		<PublicSign Condition=" '$(OS)' != 'Windows_NT' ">true</PublicSign>
+		<PackageId>Microsoft.AspNetCore.Identity.EntityFrameworkCore.Test</PackageId>
+		<GenerateRuntimeConfigurationFiles>true</GenerateRuntimeConfigurationFiles>
+		<RuntimeFrameworkVersion Condition=" '$(TargetFramework)' == 'netcoreapp1.0' ">1.0.4</RuntimeFrameworkVersion>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <Compile Include="..\Shared\*.cs" Exclude="bin\**;obj\**;**\*.xproj;packages\**" />
-    <None Update="config.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-    </None>
-  </ItemGroup>
+	<ItemGroup>
+		<Compile Include="..\Shared\*.cs" Exclude="bin\**;obj\**;**\*.xproj;packages\**" />
+		<None Update="config.json">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+			<CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+		</None>
+	</ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\..\src\LinqToDB.Identity\LinqToDB.Identity.csproj" />
-  </ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\..\src\LinqToDB.Identity\LinqToDB.Identity.csproj" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.0.0" />
-    <PackageReference Include="xunit.runner.visualstudio" Version="2.2.0" />
-    <PackageReference Include="Microsoft.AspNetCore.Hosting" Version="1.1.2" />
-    <PackageReference Include="Microsoft.AspNetCore.Http" Version="1.1.2" />
-    <PackageReference Include="Microsoft.AspNetCore.Identity" Version="1.1.2" />
-    <PackageReference Include="Microsoft.AspNetCore.TestHost" Version="1.1.2" />
-    <PackageReference Include="Microsoft.AspNetCore.Testing" Version="1.1.0-*" />
-    <PackageReference Include="Microsoft.Extensions.Configuration.EnvironmentVariables" Version="1.1.2" />
-    <PackageReference Include="Microsoft.Extensions.Configuration.FileExtensions" Version="1.1.2" />
-    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="1.1.2" />
-    <PackageReference Include="Moq" Version="4.7.63" />
-    <PackageReference Include="xunit" Version="2.2.0" />
-    <PackageReference Include="Microsoft.Data.Sqlite" Version="1.1.1" />
-  </ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.7.2" />
+		<PackageReference Include="xunit.runner.visualstudio" Version="2.3.1" />
+		<PackageReference Include="Moq" Version="4.8.2" />
+		<PackageReference Include="xunit" Version="2.3.1" />
+		
+		<PackageReference Include="Microsoft.AspNetCore.Hosting" Version="2.0.3" />
+		<PackageReference Include="Microsoft.AspNetCore.Http" Version="2.0.3" />
+		<PackageReference Include="Microsoft.AspNetCore.Identity" Version="2.0.3" />
+		<PackageReference Include="Microsoft.AspNetCore.Testing" Version="2.1.0-*" />
+		<PackageReference Include="Microsoft.Data.Sqlite" Version="2.0.1" />
+	
+		<PackageReference Include="Microsoft.AspNetCore.TestHost" Version="2.0.3" />
+		<PackageReference Include="Microsoft.Extensions.Configuration.EnvironmentVariables" Version="2.0.2" />
+		<PackageReference Include="Microsoft.Extensions.Configuration.FileExtensions" Version="2.0.2" />
+		<PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="2.0.2" />
+	</ItemGroup>
 
-  <ItemGroup Condition=" '$(TargetFramework)' == 'netcoreapp1.0' ">
-    <PackageReference Include="System.Diagnostics.TraceSource" Version="4.3.0" />
-  </ItemGroup>
-
-  <ItemGroup Condition=" '$(TargetFramework)' == 'net451' ">
-    <Reference Include="System" />
-    <Reference Include="Microsoft.CSharp" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Service Include="{82a7f48d-3b50-4b1e-b82e-3ada8210c358}" />
-  </ItemGroup>
-
+	<PropertyGroup>
+		<DefineConstants>$(DefineConstants);NETSTANDARD2_0</DefineConstants>
+	</PropertyGroup>
 </Project>

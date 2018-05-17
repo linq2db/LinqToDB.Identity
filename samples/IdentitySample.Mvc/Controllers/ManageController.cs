@@ -4,6 +4,7 @@ using IdentitySample.Models;
 using IdentitySample.Models.ManageViewModels;
 using IdentitySample.Services;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http.Authentication;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -271,8 +272,9 @@ namespace IdentitySamples.Controllers
 			if (user == null)
 				return View("Error");
 			var userLogins = await _userManager.GetLoginsAsync(user);
-			var otherLogins = _signInManager.GetExternalAuthenticationSchemes()
-				.Where(auth => userLogins.All(ul => auth.AuthenticationScheme != ul.LoginProvider))
+			var otherLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync())
+				.Where(auth => userLogins.All(ul => auth.Name != ul.LoginProvider))
+				.Select(auth => new AuthenticationDescription(){ AuthenticationScheme = auth.Name, DisplayName = auth.DisplayName })
 				.ToList();
 			ViewData["ShowRemoveButton"] = user.PasswordHash != null || userLogins.Count > 1;
 			return View(new ManageLoginsViewModel

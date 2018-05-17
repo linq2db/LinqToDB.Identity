@@ -10,8 +10,13 @@ namespace LinqToDB.Identity
 	///     Represents a claim that is granted to all users within a role.
 	/// </summary>
 	/// <typeparam name="TKey">The type of the primary key of the role associated with this claim.</typeparam>
-	public class IdentityRoleClaim<TKey> : IClameConverter, IIdentityRoleClaim<TKey> where TKey : IEquatable<TKey>
+	public class IdentityRoleClaim<TKey> :
+#if NETSTANDARD2_0
+	Microsoft.AspNetCore.Identity.IdentityRoleClaim<TKey>,
+#endif
+		IClameConverter, IIdentityRoleClaim<TKey> where TKey : IEquatable<TKey>
 	{
+#if !NETSTANDARD2_0
 		/// <summary>
 		///     Constructs a new claim with the type and value.
 		/// </summary>
@@ -50,5 +55,6 @@ namespace LinqToDB.Identity
 		///     Gets or sets the claim value for this claim.
 		/// </summary>
 		public virtual string ClaimValue { get; set; }
+#endif
 	}
 }

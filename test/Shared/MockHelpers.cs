@@ -87,7 +87,12 @@ namespace Microsoft.AspNetCore.Identity.Test
 			store = store ?? new Mock<IRoleStore<TRole>>().Object;
 			var roles = new List<IRoleValidator<TRole>>();
 			roles.Add(new RoleValidator<TRole>());
-			return new RoleManager<TRole>(store, roles,
+#if NETSTANDARD2_0
+			return new AspNetRoleManager<TRole>
+#else
+			return new RoleManager<TRole>
+#endif
+				(store, roles,
 				new UpperInvariantLookupNormalizer(),
 				new IdentityErrorDescriber(),
 				null,

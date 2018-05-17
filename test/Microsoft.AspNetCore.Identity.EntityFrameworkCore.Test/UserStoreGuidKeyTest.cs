@@ -10,7 +10,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace Microsoft.AspNetCore.Identity.EntityFrameworkCore.Test
 {
-	public class GuidUser : IdentityUser<Guid>
+	public class GuidUser : LinqToDB.Identity.IdentityUser<Guid>
 	{
 		public GuidUser()
 		{
@@ -19,7 +19,7 @@ namespace Microsoft.AspNetCore.Identity.EntityFrameworkCore.Test
 		}
 	}
 
-	public class GuidRole : IdentityRole<Guid>
+	public class GuidRole : LinqToDB.Identity.IdentityRole<Guid>
 	{
 		public GuidRole()
 		{

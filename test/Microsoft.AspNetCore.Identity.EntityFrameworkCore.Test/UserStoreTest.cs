@@ -17,6 +17,9 @@ using Xunit;
 
 namespace Microsoft.AspNetCore.Identity.EntityFrameworkCore.Test
 {
+	using IdentityUser = LinqToDB.Identity.IdentityUser;
+	using IdentityRole = LinqToDB.Identity.IdentityRole;
+
 	public class UserStoreTest : UserManagerTestBase<IdentityUser, IdentityRole>, IClassFixture<ScratchDatabaseFixture>
 	{
 		public UserStoreTest(ScratchDatabaseFixture fixture)
@@ -68,7 +71,7 @@ namespace Microsoft.AspNetCore.Identity.EntityFrameworkCore.Test
 			return CreateContext();
 		}
 
-		public void EnsureDatabase()
+		protected void EnsureDatabase()
 		{
 			CreateContext();
 		}

@@ -1,6 +1,5 @@
 // Copyright (c) .NET Foundation. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
-
 using System;
 using System.Security.Claims;
 
@@ -33,8 +32,13 @@ namespace LinqToDB.Identity
 	///     Represents a claim that a user possesses.
 	/// </summary>
 	/// <typeparam name="TKey">The type used for the primary key for this user that possesses this claim.</typeparam>
-	public class IdentityUserClaim<TKey> : IIdentityUserClaim<TKey>, IClameConverter where TKey : IEquatable<TKey>
+	public class IdentityUserClaim<TKey> :
+#if NETSTANDARD2_0
+	Microsoft.AspNetCore.Identity.IdentityUserClaim<TKey>,
+#endif
+		IIdentityUserClaim<TKey>, IClameConverter where TKey : IEquatable<TKey>
 	{
+#if !NETSTANDARD2_0
 		/// <summary>
 		///     Gets or sets the identifier for this user claim.
 		/// </summary>
@@ -73,5 +77,6 @@ namespace LinqToDB.Identity
 			ClaimType = claim.Type;
 			ClaimValue = claim.Value;
 		}
+#endif
 	}
 }
