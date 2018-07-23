@@ -7,8 +7,8 @@ init:
   - ps: $env:TestSqlServerDefaultConnectionString = "Server=(local)\SQL2014;Database=master;Integrated Security=true"
 
 environment:
-  assemblyVersion: 2.0.0
-  packageVersion: 2.0.0-final1
+  assemblyVersion: 2.0.1
+  packageVersion: 2.0.1
 
 version: $(assemblyVersion).{build}
 
