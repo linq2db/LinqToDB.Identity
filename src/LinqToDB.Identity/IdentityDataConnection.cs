@@ -1,8 +1,6 @@
-// Copyright (c) .NET Foundation. All rights reserved.
-// Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
-
 using System;
 using System.Data;
+using System.Data.Common;
 using LinqToDB.Data;
 using LinqToDB.DataProvider;
 
@@ -19,8 +17,8 @@ namespace LinqToDB.Identity
 		///     Constructor
 		/// </summary>
 		/// <param name="dataProvider">Data provider object, see <see cref="IDataProvider" /></param>
-		/// <param name="connection">Connection object <see cref="IDbConnection" /></param>
-		public IdentityDataConnection(IDataProvider dataProvider, IDbConnection connection)
+		/// <param name="connection">Connection object <see cref="DbConnection" /></param>
+		public IdentityDataConnection(IDataProvider dataProvider, DbConnection connection)
 			: base(dataProvider, connection)
 		{
 		}
@@ -29,8 +27,8 @@ namespace LinqToDB.Identity
 		///     Constructor
 		/// </summary>
 		/// <param name="dataProvider">Data provider object, see <see cref="IDataProvider" /></param>
-		/// <param name="transaction">Transdaction object <see cref="IDbTransaction" /></param>
-		public IdentityDataConnection(IDataProvider dataProvider, IDbTransaction transaction)
+		/// <param name="transaction">Transdaction object <see cref="DbTransaction" /></param>
+		public IdentityDataConnection(IDataProvider dataProvider, DbTransaction transaction)
 			: base(dataProvider, transaction)
 		{
 		}
@@ -87,8 +85,8 @@ namespace LinqToDB.Identity
 		///     Constructor
 		/// </summary>
 		/// <param name="dataProvider">Data provider object, see <see cref="IDataProvider" /></param>
-		/// <param name="connection">Connection object <see cref="IDbConnection" /></param>
-		public IdentityDataConnection(IDataProvider dataProvider, IDbConnection connection)
+		/// <param name="connection">Connection object <see cref="DbConnection" /></param>
+		public IdentityDataConnection(IDataProvider dataProvider, DbConnection connection)
 			: base(dataProvider, connection)
 		{
 		}
@@ -97,8 +95,8 @@ namespace LinqToDB.Identity
 		///     Constructor
 		/// </summary>
 		/// <param name="dataProvider">Data provider object, see <see cref="IDataProvider" /></param>
-		/// <param name="transaction">Transdaction object <see cref="IDbTransaction" /></param>
-		public IdentityDataConnection(IDataProvider dataProvider, IDbTransaction transaction)
+		/// <param name="transaction">Transdaction object <see cref="DbTransaction" /></param>
+		public IdentityDataConnection(IDataProvider dataProvider, DbTransaction transaction)
 			: base(dataProvider, transaction)
 		{
 		}
@@ -162,8 +160,8 @@ namespace LinqToDB.Identity
 		///     Constructor
 		/// </summary>
 		/// <param name="dataProvider">Data provider object, see <see cref="IDataProvider" /></param>
-		/// <param name="connection">Connection object <see cref="IDbConnection" /></param>
-		public IdentityDataConnection(IDataProvider dataProvider, IDbConnection connection)
+		/// <param name="connection">Connection object <see cref="DbConnection" /></param>
+		public IdentityDataConnection(IDataProvider dataProvider, DbConnection connection)
 			: base(dataProvider, connection)
 		{
 		}
@@ -172,8 +170,8 @@ namespace LinqToDB.Identity
 		///     Constructor
 		/// </summary>
 		/// <param name="dataProvider">Data provider object, see <see cref="IDataProvider" /></param>
-		/// <param name="transaction">Transdaction object <see cref="IDbTransaction" /></param>
-		public IdentityDataConnection(IDataProvider dataProvider, IDbTransaction transaction)
+		/// <param name="transaction">Transdaction object <see cref="DbTransaction" /></param>
+		public IdentityDataConnection(IDataProvider dataProvider, DbTransaction transaction)
 			: base(dataProvider, transaction)
 		{
 		}
@@ -245,8 +243,8 @@ namespace LinqToDB.Identity
 		///     Constructor
 		/// </summary>
 		/// <param name="dataProvider">Data provider object, see <see cref="IDataProvider" /></param>
-		/// <param name="connection">Connection object <see cref="IDbConnection" /></param>
-		public IdentityDataConnection(IDataProvider dataProvider, IDbConnection connection)
+		/// <param name="connection">Connection object <see cref="DbConnection" /></param>
+		public IdentityDataConnection(IDataProvider dataProvider, DbConnection connection)
 			: base(dataProvider, connection)
 		{
 		}
@@ -255,8 +253,8 @@ namespace LinqToDB.Identity
 		///     Constructor
 		/// </summary>
 		/// <param name="dataProvider">Data provider object, see <see cref="IDataProvider" /></param>
-		/// <param name="transaction">Transdaction object <see cref="IDbTransaction" /></param>
-		public IdentityDataConnection(IDataProvider dataProvider, IDbTransaction transaction)
+		/// <param name="transaction">Transdaction object <see cref="DbTransaction" /></param>
+		public IdentityDataConnection(IDataProvider dataProvider, DbTransaction transaction)
 			: base(dataProvider, transaction)
 		{
 		}
@@ -304,37 +302,37 @@ namespace LinqToDB.Identity
 		/// <summary>
 		///     Gets the <see cref="ITable{TEntity}" /> of Users.
 		/// </summary>
-		public ITable<TUser> Users => GetTable<TUser>();
+		public ITable<TUser> Users => this.GetTable<TUser>();
 
 		/// <summary>
 		///     Gets the <see cref="ITable{TEntity}" /> of User claims.
 		/// </summary>
-		public ITable<TUserClaim> UserClaims => GetTable<TUserClaim>();
+		public ITable<TUserClaim> UserClaims => this.GetTable<TUserClaim>();
 
 		/// <summary>
 		///     Gets the <see cref="ITable{TEntity}" /> of User logins.
 		/// </summary>
-		public ITable<TUserLogin> UserLogins => GetTable<TUserLogin>();
+		public ITable<TUserLogin> UserLogins => this.GetTable<TUserLogin>();
 
 		/// <summary>
 		///     Gets the <see cref="ITable{TEntity}" /> of User roles.
 		/// </summary>
-		public ITable<TUserRole> UserRoles => GetTable<TUserRole>();
+		public ITable<TUserRole> UserRoles => this.GetTable<TUserRole>();
 
 		/// <summary>
 		///     Gets the <see cref="ITable{TEntity}" /> of User tokens.
 		/// </summary>
-		public ITable<TUserToken> UserTokens => GetTable<TUserToken>();
+		public ITable<TUserToken> UserTokens => this.GetTable<TUserToken>();
 
 		/// <summary>
 		///     Gets the <see cref="ITable{TEntity}" /> of roles.
 		/// </summary>
-		public ITable<TRole> Roles => GetTable<TRole>();
+		public ITable<TRole> Roles => this.GetTable<TRole>();
 
 		/// <summary>
 		///     Gets the <see cref="ITable{TEntity}" /> of role claims.
 		/// </summary>
-		public ITable<TRoleClaim> RoleClaims => GetTable<TRoleClaim>();
+		public ITable<TRoleClaim> RoleClaims => this.GetTable<TRoleClaim>();
 
 		#endregion
 	}

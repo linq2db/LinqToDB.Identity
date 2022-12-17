@@ -43,7 +43,7 @@ namespace IdentitySample
 				.AddConfiguration(
 					"Default",
 					Configuration["Data:DefaultConnection:ConnectionString"],
-					new SqlServerDataProvider("Default", SqlServerVersion.v2012, SqlServerProvider.SystemDataSqlClient));
+					SqlServerTools.GetDataProvider(SqlServerVersion.v2012, SqlServerProvider.SystemDataSqlClient));
 
 			DataConnection.DefaultConfiguration = "Default";
 

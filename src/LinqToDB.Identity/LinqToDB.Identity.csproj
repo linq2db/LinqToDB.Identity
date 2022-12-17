@@ -2,9 +2,9 @@
 
 	<PropertyGroup>
 		<Description>ASP.NET Core Identity provider that uses LinqToDB.</Description>
-		<VersionPrefix>3.3.0</VersionPrefix>
-		<Version>3.3.0</Version>
-		<PackageVersion>3.3.0</PackageVersion>
+		<VersionPrefix>3.4.0</VersionPrefix>
+		<Version>3.4.0</Version>
+		<PackageVersion>3.4.0</PackageVersion>
 		
 		<Authors>Ilya Chudin</Authors>
 		
@@ -41,7 +41,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="linq2db" Version="3.3.0" />
+		<PackageReference Include="linq2db" Version="4.4.0" />
 	
 		<PackageReference Include="Microsoft.AspNetCore.Identity" Version="2.1.2" />
 		<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="2.1.1" />
