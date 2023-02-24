@@ -17,7 +17,7 @@
 		<AssemblyName>LinqToDB.Identity</AssemblyName>
 
 		<SignAssembly>true</SignAssembly>
-		<AssemblyOriginatorKeyFile>$(SolutionDir)linq2db.snk</AssemblyOriginatorKeyFile>
+		<AssemblyOriginatorKeyFile>$(MSBuildThisFileDirectory)\..\..\linq2db.snk</AssemblyOriginatorKeyFile>
 		<PublicSign Condition=" '$(OS)' != 'Windows_NT' ">true</PublicSign>
 		
 		<PackageId>linq2db.Identity</PackageId>
