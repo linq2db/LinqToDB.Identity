@@ -56,7 +56,7 @@ namespace LinqToDB.Identity
 						Expression.Convert(Expression.PropertyOrField(p, column.MemberName), typeof(object)),
 						p);
 
-				var val = column.MemberAccessor.Getter(obj);
+				var val = column.MemberAccessor.GetValue(obj);
 				query = query.Set(expr, val);
 			}
 
