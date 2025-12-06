@@ -245,7 +245,7 @@ namespace LinqToDB.Identity
 		/// <param name="dataProvider">Data provider object, see <see cref="IDataProvider" /></param>
 		/// <param name="connection">Connection object <see cref="DbConnection" /></param>
 		public IdentityDataConnection(IDataProvider dataProvider, DbConnection connection)
-			: base(dataProvider, connection)
+			: base(new DataOptions().UseConnection(dataProvider, connection))
 		{
 		}
 
@@ -255,8 +255,8 @@ namespace LinqToDB.Identity
 		/// <param name="dataProvider">Data provider object, see <see cref="IDataProvider" /></param>
 		/// <param name="transaction">Transdaction object <see cref="DbTransaction" /></param>
 		public IdentityDataConnection(IDataProvider dataProvider, DbTransaction transaction)
-			: base(dataProvider, transaction)
-		{
+            : base(new DataOptions().UseTransaction(dataProvider, transaction))
+        {
 		}
 
 		/// <summary>
@@ -265,8 +265,8 @@ namespace LinqToDB.Identity
 		/// <param name="dataProvider">Data provider object, see <see cref="IDataProvider" /> </param>
 		/// <param name="connectionString">Connection string</param>
 		public IdentityDataConnection(IDataProvider dataProvider, string connectionString)
-			: base(dataProvider, connectionString)
-		{
+            : base(new DataOptions().UseConnectionString(dataProvider, connectionString))
+        {
 		}
 
 		/// <summary>
@@ -275,8 +275,8 @@ namespace LinqToDB.Identity
 		/// <param name="providerName">Data provider name</param>
 		/// <param name="connectionString">Connection string</param>
 		public IdentityDataConnection(string providerName, string connectionString)
-			: base(providerName, connectionString)
-		{
+            : base(new DataOptions().UseConnectionString(providerName, connectionString))
+        {
 		}
 
 		/// <summary>
@@ -284,8 +284,8 @@ namespace LinqToDB.Identity
 		/// </summary>
 		/// <param name="configurationString">Connection string</param>
 		public IdentityDataConnection(string configurationString)
-			: base(configurationString)
-		{
+            : base(new DataOptions().UseConfiguration(configurationString))
+        {
 		}
 
 		/// <summary>
